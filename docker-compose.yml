@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mqtt5:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt5
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./data/:/mosquitto/data
+      - ./log/mosquitto.log:/mosquitto/log
+      - ./config/passwordfile:/mosquitto/config/passwordfile
+    restart: unless-stopped
+    networks:
+      - mqtt_network
+
+networks:
+  mqtt_network:
+    driver: bridge
+    external: true
